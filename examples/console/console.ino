@@ -1,5 +1,5 @@
-#include <TinyConsole.h>
-#include <MqttStreaming.h>
+#include <TinyConsole.h>    // https://github.com/hsaturn/TinyConsole
+#include <MqttStreaming.h>  // https://github.com/hsaturn/TinyMqtt
 
 void onCommand(const std::string &cmd)
 {
@@ -19,7 +19,7 @@ void onCommand(const std::string &cmd)
   }
 
   Console.saveCursor().gotoxy(2,1).fg(TinyConsole::red).bg(TinyConsole::white);
-  Console << "Last command: (" << cmd << ')';
+  Console << "Last command: (" << cmd << ')' << endl;
   Console.eraseEol().restoreCursor();
   if (cmd=="green") Console.fg(TinyConsole::green);
   if (cmd=="red") Console.fg(TinyConsole::red);
