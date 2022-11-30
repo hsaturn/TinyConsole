@@ -10,6 +10,9 @@ A prompt allows to enter commands that can be interpreted trhough a user defined
 [![Esp32](https://img.shields.io/badge/platform-ESP32-green)](https://www.espressif.com/en/products/socs/esp32)
 [![Gpl 3.0](https://img.shields.io/github/license/hsaturn/TinyConsole)](https://www.gnu.org/licenses/gpl-3.0.fr.html)
 
+## Screenshot
+![Screenshot](/TinyConsole.png)
+
 ## Features
 
 - Detection of ansi term vs Arduino's IDE serial monitor
