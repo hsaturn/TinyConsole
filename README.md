@@ -1,2 +1,38 @@
 # TinyConsole
-Handle terminal with ESP and Arduino
+This library allows to communicate with an Arduino or an ESP through terminal  applications such as Minicomm or Mobaxterm.
+It supports a subset of ansi escape sequence and is able to distinguish between the Serial Monitor of Arduino IDE and a ansi terminal.
+
+A prompt allows to enter commands that can be interpreted trhough a user defined callback.
+
+[![Release](https://img.shields.io/github/v/release/hsaturn/TinyMqtt)](https://github.com/hsaturn/TinyConsole/releases)
+[![Issues](https://img.shields.io/github/issues/hsaturn/TinyMqtt)](https://github.com/hsaturn/TinyConsole/issues)
+[![Esp8266](https://img.shields.io/badge/platform-ESP8266-green)](https://www.espressif.com/en/products/socs/esp8266)
+[![Esp32](https://img.shields.io/badge/platform-ESP32-green)](https://www.espressif.com/en/products/socs/esp32)
+[![Gpl 3.0](https://img.shields.io/github/license/hsaturn/TinyConsole)](https://www.gnu.org/licenses/gpl-3.0.fr.html)
+
+## Features
+
+- Detection of ansi term vs Arduino's IDE serial monitor
+- Command line with prompt
+- Separate callback when the user hit a function key (F1..F12)
+- Supports Ansi colors
+- Subset of ansi codes (cursor position, clear, reset, cursor visibility)
+
+## Limitations
+
+- Line per line evaluation (no key event)
+- Not all ansi sequences are implemented
+- Size of terminal not detected (yet)
+
+## Examples
+
+| Example             | Description                                |
+| ------------------- | ------------------------------------------ |
+| [console](https://github.com/hsaturn/TinyConsole/tree/main/examples/console/console.ino) | Minimal example showing callbacks usages |
+
+## TODO List
+* Detect terminal size
+
+## License
+Gnu GPL 3.0, see [LICENSE](https://github.com/hsaturn/TinyMqtt/blob/main/LICENSE).
+
