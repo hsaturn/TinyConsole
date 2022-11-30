@@ -1,0 +1,22 @@
+#######################################
+# Syntax Coloring Map For TinyConsole
+#######################################
+
+#######################################
+# Datatypes and functions
+#######################################
+
+TinyConsole  KEYWORD1
+ 
+reset		       KEYWORD2
+cls            KEYWORD2
+printat	       KEYWORD2
+gotoxy		     KEYWORD2
+fg     		     KEYWORD2
+bg     		     KEYWORD2
+saveCursor     KEYWORD2
+restoreCursor  KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
