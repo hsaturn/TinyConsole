@@ -4,8 +4,8 @@ It supports a subset of ansi escape sequence and is able to distinguish between 
 
 A prompt allows to enter commands that can be interpreted trhough a user defined callback.
 
-[![Release](https://img.shields.io/github/v/release/hsaturn/TinyMqtt)](https://github.com/hsaturn/TinyConsole/releases)
-[![Issues](https://img.shields.io/github/issues/hsaturn/TinyMqtt)](https://github.com/hsaturn/TinyConsole/issues)
+[![Release](https://img.shields.io/github/v/release/hsaturn/TinyConsole)](https://github.com/hsaturn/TinyConsole/releases)
+[![Issues](https://img.shields.io/github/issues/hsaturn/TinyConsole)](https://github.com/hsaturn/TinyConsole/issues)
 [![Esp8266](https://img.shields.io/badge/platform-ESP8266-green)](https://www.espressif.com/en/products/socs/esp8266)
 [![Esp32](https://img.shields.io/badge/platform-ESP32-green)](https://www.espressif.com/en/products/socs/esp32)
 [![Gpl 3.0](https://img.shields.io/github/license/hsaturn/TinyConsole)](https://www.gnu.org/licenses/gpl-3.0.fr.html)
