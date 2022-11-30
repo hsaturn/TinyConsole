@@ -14,6 +14,7 @@ A prompt allows to enter commands that can be interpreted trhough a user defined
 
 - Detection of ansi term vs Arduino's IDE serial monitor
 - Command line with prompt
+- Home, Delete, Backspace, and Cursors keys are handled.
 - Separate callback when the user hit a function key (F1..F12)
 - Supports Ansi colors
 - Subset of ansi codes (cursor position, clear, reset, cursor visibility)
@@ -32,6 +33,8 @@ A prompt allows to enter commands that can be interpreted trhough a user defined
 
 ## TODO List
 * Detect terminal size
+* Separate command line from terminal
+* Send event for each keys
 
 ## License
 Gnu GPL 3.0, see [LICENSE](https://github.com/hsaturn/TinyMqtt/blob/main/LICENSE).
