@@ -1,7 +1,6 @@
 #pragma once
 #include <string>
-#include <HardwareSerial.h>
-
+#include <Stream.h>
 #define TINY_CONSOLE_AUTOSIZE 0
 
 class TinyConsole
@@ -40,7 +39,7 @@ class TinyConsole
     using CallBackFnKey = void(*)(int fkey);
 
     TinyConsole();
-    void begin(HardwareSerial&);
+    void begin(Stream&);
     void loop();
 
     void setPrompt(const char* prompt)
@@ -104,7 +103,7 @@ class TinyConsole
     int cursor=0; // column
     CallBack callback = nullptr;
     CallBackFnKey callback_fn = nullptr;
-    HardwareSerial* serial = nullptr;
+    Stream* serial = nullptr;
     bool term = false;
 
     bool getTermSize();

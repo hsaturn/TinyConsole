@@ -14,7 +14,7 @@ TinyConsole::TinyConsole()
 {
 }
 
-void TinyConsole::begin(HardwareSerial& ser)
+void TinyConsole::begin(Stream& ser)
 {
   term = false;
   serial = &ser;
