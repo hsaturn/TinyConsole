@@ -29,6 +29,13 @@ class TinyConsole
       none = 255
     };
 
+    enum Operation
+    {
+      hide_cur,
+      show_cur,
+      erase_to_end
+    };
+
     using CallBack = void(*)(const std::string& command);
     using CallBackFnKey = void(*)(int fkey);
 
@@ -79,7 +86,16 @@ class TinyConsole
       console.fg(color);
       return console;
     }
-    
+
+    friend TinyConsole& operator << (TinyConsole& console, Operation op)
+    {
+      if (op == erase_to_end)
+        console.eraseEol();
+      else
+        console.cursorVisible(op == show_cur);
+      return console;
+    }
+
   private:
     char waitChar();
     void handleEscape();

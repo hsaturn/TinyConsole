@@ -120,7 +120,8 @@ const TinyConsole& TinyConsole::fg(enum TinyConsole::Color c) const
 
 const TinyConsole& TinyConsole::prompt() const
 {
-  if (term) *serial << "\r\n" << ps1;
+  if (term)
+    *serial << CSI << 'G' << ps1 << input << ' ' << CSI << (int)(ps1.size()+cursor+1) << 'G';
   return *this;
 }
 
@@ -167,8 +168,7 @@ void TinyConsole::loop()
     (*this) << "code(" << (int)c << ')';
     restoreCursor();
     */
-    if (term)
-      *serial << CSI << 'G' << ps1 << input << ' ' << CSI << (int)(ps1.size()+cursor+1) << 'G';
+		prompt();
   }
 }
 
