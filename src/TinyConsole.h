@@ -1,3 +1,4 @@
+// vim: ts=2 sw=2 expandtab
 #pragma once
 #include <string>
 #include <Stream.h>
@@ -39,6 +40,7 @@ class TinyConsole
     using CallBackFnKey = void(*)(int fkey);
 
     TinyConsole();
+    void begin(long baud);  // Init with Serial
     void begin(Stream&);
     void loop();
 

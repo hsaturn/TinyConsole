@@ -10,8 +10,14 @@ static const char ESC='\033';
 static const char BEL='\007';
 
 TinyConsole::TinyConsole()
-  : ps1("> ")
+  : ps1("> "), serial(&Serial)
 {
+}
+
+void TinyConsole::begin(long baud)
+{
+	serial = &Serial;
+	Serial.begin(baud);
 }
 
 void TinyConsole::begin(Stream& ser)
