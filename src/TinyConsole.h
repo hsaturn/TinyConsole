@@ -100,7 +100,7 @@ class TinyConsole
     void handleEscape();
     std::string input;
     std::string ps1;
-    int cursor=0; // column
+    unsigned int cursor=0; // column
     CallBack callback = nullptr;
     CallBackFnKey callback_fn = nullptr;
     Stream* serial = nullptr;

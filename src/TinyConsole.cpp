@@ -68,6 +68,8 @@ bool TinyConsole::getTermSize()
   if (sx) sx--;
   if (sy) sy--;
   return true;
+#else
+  return false;
 #endif
 }
 
