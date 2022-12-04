@@ -1,5 +1,5 @@
 #include <TinyConsole.h>    // https://github.com/hsaturn/TinyConsole
-#include <MqttStreaming.h>  // https://github.com/hsaturn/TinyMqtt
+#include <TinyStreaming.h>  // https://github.com/hsaturn/TinyMqtt
 
 void onCommand(const std::string &cmd)
 {

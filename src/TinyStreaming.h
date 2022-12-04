@@ -1,4 +1,4 @@
-/* MqttStreaming.h - Fork of Streaming.h adding std::string and with some minor fixes
+/* TinyStreaming.h - Fork of Streaming.h adding std::string and with some minor fixes
  * (I have to speek to the author in order to include my changes to his library if possible)
  **/
 

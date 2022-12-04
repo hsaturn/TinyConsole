@@ -1,5 +1,5 @@
 #include "TinyConsole.h"
-#include <MqttStreaming.h>
+#include <TinyStreaming.h>
 
 #if !defined(NO_GLOBAL_INSTANCES) && !defined(NO_GLOBAL_SERIAL)
 TinyConsole Console;
