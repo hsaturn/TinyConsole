@@ -33,7 +33,9 @@ class TinyConsole
     {
       hide_cur,
       show_cur,
-      erase_to_end
+      erase_to_end,
+      save_cursor,
+      restore_cursor
     };
 
     using CallBack = void(*)(const std::string& command);
@@ -92,10 +94,16 @@ class TinyConsole
     {
       if (op == erase_to_end)
         console.eraseEol();
+      else if (op == save_cursor)
+        console.saveCursor();
+      else if (op == restore_cursor)
+        console.restoreCursor();
       else
         console.cursorVisible(op == show_cur);
       return console;
     }
+
+    bool isTerm() const { return term; }
 
   private:
     char waitChar();
