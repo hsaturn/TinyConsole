@@ -69,6 +69,10 @@ test(operator_eq)
  assertEqual(s.size(), 1);
  assertEqual(s[0], 'z');
  assertEqual((int)p[1], 0);
+ assertEqual(u, "uvwx");
+
+ TinyString u2 = std::move(u);
+ assertEqual(u2, "uvwx");
 }
 
 test(operator_add)

@@ -19,6 +19,7 @@ class TinyString
     TinyString(const char*, size_t size);
     TinyString(const char* s) : TinyString(s, strlen(s)){};
     TinyString& operator= (const TinyString&);
+    TinyString& operator= (TinyString&&);
     ~TinyString() { clear(); }
 
     int8_t compare(const char* buf, size_t len) const;

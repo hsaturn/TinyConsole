@@ -31,6 +31,16 @@ TinyString::TinyString(const TinyString& m)
   copy(m);
 }
 
+TinyString& TinyString::operator=(TinyString && other)
+{
+  if (this == &other) return *this;
+  clear();
+  str = std::exchange(other.str, str);
+  size_ = std::exchange(other.size_, size_);
+  free_ = std::exchange(other.free_, free_);
+  return *this;
+}
+
 TinyString& TinyString::operator=(const TinyString& m)
 {
   copy(m);
