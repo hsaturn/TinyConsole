@@ -18,6 +18,14 @@ TinyString::TinyString(int i, int base)
   free_ -= size_;
 }
 
+TinyString::TinyString(char c)
+{
+  reserve(2);
+  str[0]=c;
+  size_ = 1;
+  free_ -= size_;
+}
+
 TinyString::TinyString(const TinyString& m)
 {
   copy(m);

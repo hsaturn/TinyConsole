@@ -14,6 +14,7 @@ class TinyString
 
     TinyString() = default;
     TinyString(int, int base=10);
+    TinyString(char);
     TinyString(const TinyString&);
     TinyString(const char*, size_t size);
     TinyString(const char* s) : TinyString(s, strlen(s)){};
