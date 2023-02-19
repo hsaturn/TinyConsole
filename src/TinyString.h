@@ -25,9 +25,9 @@ class TinyString
     int8_t compare(const char* buf, size_t len) const;
     int8_t compare(const char* buf) const { return compare(buf, strlen(buf)); }
 
-    friend bool operator == (const TinyString& l, const TinyString& r) { return l.compare(r) == 0; }
-
-    friend bool operator < (const TinyString& l, const TinyString& r) { return l.compare(r) <0; }
+    friend bool operator == (const TinyString& l, const TinyString& r) { return l.compare(r, r.size_) == 0; }
+    friend bool operator == (const TinyString& l, const char* r) { return l.compare(r) == 0; }
+    friend bool operator < (const TinyString& l, const TinyString& r) { return l.compare(r, r.size_) <0; }
 
     const char* c_str() const { return str; }
     size_t length() const { return size_; }

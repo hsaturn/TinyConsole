@@ -215,6 +215,7 @@ test(compare)
   assertEqual(a.compare(b), -1);
   assertEqual(a.compare(aa), -97);
   assertEqual(aa.compare(a), 97);
+  assertEqual(a=="a", true);
 
   assertTrue(b > a);
   assertFalse(b > b);
