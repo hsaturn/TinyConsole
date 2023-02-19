@@ -1,0 +1,29 @@
+# See https://docs.github.com/en/actions/guides for documentation about GitHub
+# Actions.
+
+name: AUnit Tests
+
+# Run on all branches.
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-20.04
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup
+      run: |
+        cd ..
+        git clone https://github.com/hsaturn/TinyConsole
+        git clone https://github.com/hsaturn/EpoxyDuino
+        git clone https://github.com/bxparks/AceRoutine
+        git clone https://github.com/hsaturn/AUnit
+        git clone https://github.com/bxparks/AceCommon
+    - name: Verify tests
+      run: |
+        make -C tests tests
+        make -C tests runtests
+        make -C tests clean

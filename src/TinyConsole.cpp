@@ -1,5 +1,5 @@
 #include "TinyConsole.h"
-#include <TinyStreaming.h>
+#include "TinyStreaming.h"
 
 #if !defined(NO_GLOBAL_INSTANCES) && !defined(NO_GLOBAL_SERIAL)
 TinyConsole Console;

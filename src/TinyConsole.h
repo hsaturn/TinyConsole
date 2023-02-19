@@ -1,12 +1,13 @@
 // vim: ts=2 sw=2 expandtab
 #pragma once
-#include <string>
+#include "TinyString.h"
 #include <Stream.h>
 #define TINY_CONSOLE_AUTOSIZE 0
 
 class TinyConsole
 {
   public:
+    using string = TinyString;
 
     enum Color
     {
@@ -38,7 +39,7 @@ class TinyConsole
       restore_cursor
     };
 
-    using CallBack = void(*)(const std::string& command);
+    using CallBack = void(*)(const string& command);
     using CallBackFnKey = void(*)(int fkey);
 
     TinyConsole();
@@ -108,8 +109,8 @@ class TinyConsole
   private:
     char waitChar();
     void handleEscape();
-    std::string input;
-    std::string ps1;
+    string input;
+    string ps1;
     unsigned int cursor=0; // column
     CallBack callback = nullptr;
     CallBackFnKey callback_fn = nullptr;
