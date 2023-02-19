@@ -218,3 +218,18 @@ void TinyString::insert(size_t pos, size_t n, char c)
   free_ -= n;
   while(n-->0) *start++=c;
 }
+
+void TinyString::insert(size_t pos, const char* s, size_t size)
+{
+  if (pos > size_) pos = size_;
+  reserve(size_ + size, 1);
+  char* dest = str+pos;
+  if (size_ > pos)
+    memmove(dest+size, dest, size_ - pos + size);
+  else
+    str[size_ + size ] = 0;
+  assert(free_ > size);
+  size_ += size;
+  free_ -= size;
+  memcpy(dest, s, size);
+}

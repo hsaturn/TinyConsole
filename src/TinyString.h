@@ -33,6 +33,8 @@ class TinyString
     void concat(const char* buf, size_t len);
     void insert(size_t pos, size_t n, char c);
     void insert(size_t pos, char c) { insert(pos, 1, c); }
+    void insert(size_t pos, const char* p) { insert(pos, p, strlen(p)); }
+    void insert(size_t pos, const char* p, size_t size);
 
     bool starts_with(const char* buf, size_t len) const;
     bool starts_with(const char* buf) const { return starts_with(buf, strlen(buf)); }

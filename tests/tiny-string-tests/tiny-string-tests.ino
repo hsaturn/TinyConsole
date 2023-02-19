@@ -269,6 +269,15 @@ test(insert)
 
   s.insert(s.length(), 'a');
   assertEqual(s, "a01234aa56789a");
+
+  s="0123456789";
+  assertEqual(s, "0123456789");
+  s.insert(5, "-----");
+  assertEqual(s, "01234-----56789");
+  s.insert(0, "===");
+  assertEqual(s, "===01234-----56789");
+  s.insert(s.length(), "-end");
+  assertEqual(s, "===01234-----56789-end");
 }
 
 //----------------------------------------------------------------------------
