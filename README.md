@@ -5,6 +5,7 @@ It supports a subset of ansi escape sequence and is able to distinguish between 
 A prompt allows to enter commands that can be interpreted trhough a user defined callback.
 
 [![Release](https://img.shields.io/github/v/release/hsaturn/TinyConsole)](https://github.com/hsaturn/TinyConsole/releases)
+[![AUnit Tests](https://github.com/hsaturn/TinyConsole/actions/workflows/aunit.yml/badge.svg)
 [![Issues](https://img.shields.io/github/issues/hsaturn/TinyConsole)](https://github.com/hsaturn/TinyConsole/issues)
 [![Esp8266](https://img.shields.io/badge/platform-ESP8266-green)](https://www.espressif.com/en/products/socs/esp8266)
 [![Esp32](https://img.shields.io/badge/platform-ESP32-green)](https://www.espressif.com/en/products/socs/esp32)
@@ -21,6 +22,7 @@ A prompt allows to enter commands that can be interpreted trhough a user defined
 - Separate callback when the user hit a function key (F1..F12)
 - Supports Ansi colors
 - Subset of ansi codes (cursor position, clear, reset, cursor visibility)
+- TinyString class designed to replace std::string, and more.
 
 ## Limitations
 
