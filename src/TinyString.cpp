@@ -110,7 +110,7 @@ bool TinyString::starts_with(const char* buf, size_t size) const
   return size == 0;
 }
 
-int TinyString::compare(const char* s, size_t len) const
+int8_t TinyString::compare(const char* s, size_t len) const
 {
   if (len > size_)
     return memcmp(str, s, size_ + 1);

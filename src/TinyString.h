@@ -20,8 +20,8 @@ class TinyString
     TinyString& operator= (const TinyString&);
     ~TinyString() { clear(); }
 
-    int compare(const char* buf, size_t len) const;
-    int compare(const char* buf) const { return compare(buf, strlen(buf)); }
+    int8_t compare(const char* buf, size_t len) const;
+    int8_t compare(const char* buf) const { return compare(buf, strlen(buf)); }
 
     friend bool operator == (const TinyString& l, const TinyString& r) { return l.compare(r) == 0; }
 
