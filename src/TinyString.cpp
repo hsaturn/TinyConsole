@@ -1,6 +1,8 @@
 #include "TinyString.h"
 #include <cstdlib>
 
+#include <iomanip>
+
 const char* TinyString::emptyString = "";
 
 TinyString::TinyString(const char* buffer, size_t s)
@@ -110,8 +112,23 @@ bool TinyString::starts_with(const char* buf, size_t size) const
   return size == 0;
 }
 
+void dump(const char* s, size_t len)
+{
+  const char* s1 = s;
+  std::cout << "  dump ";
+  len++;
+  while (len--)
+  {
+    std::cout << std::setw(2) << std::hex << (int)(*s++) << ' ';
+  }
+  std::cout << " : " << s1 << std::endl;
+}
+
 int8_t TinyString::compare(const char* s, size_t len) const
 {
+  std::cout << "compare " << s << std::endl;
+  dump(str, size_);
+  dump(s, len);
   if (len > size_)
     return memcmp(str, s, size_ + 1);
   else
