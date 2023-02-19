@@ -239,6 +239,25 @@ test(find)
   assertEqual(s.find(needle), TinyString::npos);
 }
 
+test(find_first_not_of)
+{
+  TinyString s("   abc");
+  assertEqual(s.find_first_not_of(' '), 3);
+
+  s="";
+  assertEqual(s.find_first_not_of(' '), TinyString::npos);
+
+  s="   ";
+  assertEqual(s.find_first_not_of(' '), TinyString::npos);
+}
+
+test(find_last_not_of)
+{
+  TinyString s("   abc   ");
+  assertEqual(s.find_last_not_of(' '), 5);
+  assertEqual(s.find_last_not_of(' ', 2), TinyString::npos);
+}
+
 test(map)
 {
   std::map<TinyString, int> m;

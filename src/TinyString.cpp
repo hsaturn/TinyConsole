@@ -184,10 +184,33 @@ TinyString::size_t TinyString::find(const char* p, size_t psize, size_t from) co
   for(;;)
   {
     if (memcmp(f, p, psize) == 0) return f-str;
-    if (left == 0) return npos;
-    left--;
+    if (left-- == 0) return npos;
     f++;
   }
+}
+
+TinyString::size_t TinyString::find_first_not_of(char c, size_t from) const
+{
+  if (size_ == 0 or from > size_) return npos;
+  const char* f = str+from;
+  size_t left = size_ - from;
+  for(;;)
+  {
+    if (left-- == 0) return npos;
+    if (*f != c) return f-str;
+    f++;
+  }
+}
+
+TinyString::size_t TinyString::find_last_not_of(char c, size_t from) const
+{
+  if (from == npos) from = size_;
+  if (size_ == 0 or from > size_) return npos;
+  for(const char* f=str+from-1; f>= str; f--)
+  {
+    if (*f != c) return f-str;
+  }
+  return npos;
 }
 
 void TinyString::dup(const char* buffer, size_t sz, uint8_t extent)

@@ -43,6 +43,8 @@ class TinyString
     size_t find(const char* buf, const size_t from=0) const { return find(buf, strlen(buf), from); }
     size_t find(const char* buf, const size_t bufsize, const size_t from=0) const;
     size_t find(const TinyString& s, const size_t from=0) const { return find(s.str, s.size_, from); }
+    size_t find_first_not_of(char c, size_t from=0) const;
+    size_t find_last_not_of(char c, size_t from=npos) const;
 
     TinyString substr(size_t pos, size_t len = npos);
 
