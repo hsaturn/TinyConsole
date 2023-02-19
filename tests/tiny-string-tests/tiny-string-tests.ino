@@ -67,8 +67,6 @@ test(operator_eq)
  s='z';
  const char* p = s.c_str();
  assertEqual(s.size(), 1);
- if (s[0] == 'z')
-   std::cout << "ok" << std::endl;
  assertEqual(s[0], 'z');
  assertEqual((int)p[1], 0);
 }
