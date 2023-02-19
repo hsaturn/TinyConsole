@@ -248,7 +248,7 @@ void TinyString::insert(size_t pos, const char* s, size_t size)
   reserve(size_ + size, 1);
   char* dest = str+pos;
   if (size_ > pos)
-    memmove(dest+size, dest, size_ - pos + size);
+    memmove(dest+size, dest, size_ - pos + 1);
   else
     str[size_ + size ] = 0;
   assert(free_ > size);
