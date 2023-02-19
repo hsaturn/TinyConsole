@@ -158,6 +158,21 @@ TinyString::size_t TinyString::find(const char c, size_t from) const
   return npos;
 }
 
+TinyString::size_t TinyString::find(const char* p, size_t psize, size_t from) const
+{
+  if (size_ == 0 or from > size_) return npos;
+  if (size_ - from < psize) return npos;
+  size_t left = size_ - from;
+  const char* f = str + from;
+  for(;;)
+  {
+    if (memcmp(f, p, psize) == 0) return f-str;
+    if (left == 0) return npos;
+    left--;
+    f++;
+  }
+}
+
 void TinyString::dup(const char* buffer, size_t sz, uint8_t extent)
 {
   reserve(sz + 1, extent);

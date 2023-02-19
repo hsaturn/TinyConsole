@@ -218,15 +218,27 @@ test(find)
 
   assertEqual(s.find('z'), TinyString::npos);
   assertEqual(s.find('a'), 0);
-  assertEqual(s.find(0), TinyString::npos);
+  assertEqual(s.find('\0'), TinyString::npos);
 
   assertEqual(s.find('a', 0), 0);
   assertEqual(s.find('a', 1), TinyString::npos);
 
   assertEqual(s.find('a', 5555), TinyString::npos);
 
-  s[0] = 0;
-  assertEqual(s.find(0), 0);
+  s[0] = '\0';
+  assertEqual(s.find('\0'), 0);
+  assertEqual(s.find("bcd"), 1);
+
+  TinyString needle("efgh");
+
+  auto pos = s.find(needle);
+  assertEqual(pos, 4);
+
+  needle[1] = '\0';
+  s[pos+1] = '\0';
+  assertEqual(s.find(needle), pos);
+  s[pos+2]='-';
+  assertEqual(s.find(needle), TinyString::npos);
 }
 
 test(map)

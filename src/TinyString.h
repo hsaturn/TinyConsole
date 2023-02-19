@@ -38,6 +38,9 @@ class TinyString
     bool starts_with(const char* buf) const { return starts_with(buf, strlen(buf)); }
 
     size_t find(const char c, const size_t from=0) const;
+    size_t find(const char* buf, const size_t from=0) const { return find(buf, strlen(buf), from); }
+    size_t find(const char* buf, const size_t bufsize, const size_t from=0) const;
+    size_t find(const TinyString& s, const size_t from=0) const { return find(s.str, s.size_, from); }
 
     TinyString substr(size_t pos, size_t len = npos);
 
