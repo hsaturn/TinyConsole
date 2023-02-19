@@ -55,6 +55,16 @@ test(clear)
   assertEqual(s, "");
 }
 
+test(operator_friend_add)
+{
+  TinyString s("one");
+  assertEqual(s+'.', TinyString("one."));
+  assertEqual('.'+TinyString("one"), TinyString(".one"));
+
+  TinyString t("two");
+  assertEqual(s+t, TinyString("onetwo"));
+}
+
 test(operator_eq)
 {
  TinyString s("abcd");

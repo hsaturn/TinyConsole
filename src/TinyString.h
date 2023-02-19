@@ -57,6 +57,10 @@ class TinyString
     TinyString& operator +=(const TinyString& s) { concat(s.str, s.size_); return *this; }
     TinyString& operator +=(int32_t);
 
+    friend TinyString operator+(const char, const TinyString&);
+    friend TinyString operator+(const TinyString&, const char);
+    friend TinyString operator+(const TinyString& left, const TinyString &right);
+
     operator const char*() const { return str; }
     operator char*() { return str; }
 

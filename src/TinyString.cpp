@@ -53,6 +53,27 @@ TinyString& TinyString::operator+=(const char c)
   return *this;
 }
 
+TinyString operator +(const TinyString& s, const char c)
+{
+  TinyString result(s);
+  result += c;
+  return result;
+}
+
+TinyString operator +(const char c, const TinyString& s)
+{
+  TinyString result(c);
+  result += s;
+  return result;
+}
+
+TinyString operator+(const TinyString& left, const TinyString& right)
+{
+  TinyString result(left);
+  result += right;
+  return result;
+}
+
 TinyString& TinyString::operator +=(int i)
 {
   reserve(size_ + sizeof(int)*3+1);
