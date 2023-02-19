@@ -194,6 +194,8 @@ void TinyString::insert(size_t pos, size_t n, char c)
   {
     memmove(start+n, start, size_ - pos + 1);
   }
+  else
+    str[size_ + n ] = 0;
   assert(free_ >= n);
   size_ += n;
   free_ -= n;
