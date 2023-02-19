@@ -126,7 +126,7 @@ void dump(const char* s, size_t len)
 
 int8_t TinyString::compare(const char* s, size_t len) const
 {
-  std::cout << "compare " << s << std::endl;
+  std::cout << "compare " << s << ':' << len << " with " << str << ':' << size_ << std::endl;
   dump(str, size_);
   dump(s, len);
   if (len > size_)
