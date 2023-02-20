@@ -83,6 +83,7 @@ test(operator_eq)
 
  TinyString u2 = std::move(u);
  assertEqual(u2, "uvwx");
+ assertEqual(not (u2 == "no..."), true);
 }
 
 test(operator_add)

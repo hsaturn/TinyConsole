@@ -27,6 +27,7 @@ class TinyString
 
     friend bool operator == (const TinyString& l, const TinyString& r) { return l.compare(r, r.size_) == 0; }
     friend bool operator == (const TinyString& l, const char* r) { return l.compare(r) == 0; }
+    friend bool operator != (const TinyString& l, const char* r) { return not (l == r); }
     friend bool operator < (const TinyString& l, const TinyString& r) { return l.compare(r, r.size_) <0; }
 
     const char* c_str() const { return str; }
