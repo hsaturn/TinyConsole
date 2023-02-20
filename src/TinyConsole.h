@@ -1,13 +1,14 @@
 // vim: ts=2 sw=2 expandtab
 #pragma once
 #include "TinyString.h"
+#include <string>
 #include <Stream.h>
 #define TINY_CONSOLE_AUTOSIZE 0
 
 class TinyConsole
 {
   public:
-    using string = TinyString;
+    using string = std::string;
 
     enum Color
     {
