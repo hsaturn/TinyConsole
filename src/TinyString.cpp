@@ -1,8 +1,6 @@
 #include "TinyString.h"
 #include <cstdlib>
 
-#include <iomanip>
-
 const char* TinyString::emptyString = "";
 
 TinyString::TinyString(const char* buffer, size_t s)
@@ -151,6 +149,11 @@ bool TinyString::starts_with(const char* buf, size_t size) const
   return size == 0;
 }
 
+// Bug: unit test is ok under Kubuntu but not under github...
+#define BUG_SEARCH 0
+#if BUG_SEARCH
+#include <iostream>
+#include <iomanip>
 void dump(const char* s, size_t len)
 {
   const char* s1 = s;
@@ -162,12 +165,15 @@ void dump(const char* s, size_t len)
   }
   std::cout << " : " << s1 << std::endl;
 }
+#endif
 
 int8_t TinyString::compare(const char* s, size_t len) const
 {
-  // std::cout << "compare " << s << ':' << len << " with " << str << ':' << size_ << std::endl;
-  // dump(str, size_);
-  // dump(s, len);
+#if BUG_SEARCH
+  std::cout << "compare " << s << ':' << len << " with " << str << ':' << size_ << std::endl;
+  dump(str, size_);
+  dump(s, len);
+#endif
   if (len > size_)
     return memcmp(str, s, size_ + 1);
   else
