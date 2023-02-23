@@ -1,0 +1,20 @@
+{
+    "name": "#name",
+    "keywords": "console, ansi, color, term",
+    "description": "#paragraph",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/hsaturn/TinyConsole.git"
+    },
+    "dependencies":
+    { #dependencies },
+    "version": "#version",
+    "exclude": "",
+    "examples": "examples/*/*.ino",
+    "frameworks": "arduino",
+    "platforms": [
+        "atmelavr",
+        "espressif8266",
+        "espressif32"
+    ]
+}

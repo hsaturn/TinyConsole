@@ -1,0 +1,20 @@
+{
+    "name": "TinyConsole",
+    "keywords": "console, ansi, color, term",
+    "description": "TinyConsole allows to communicate through Serial or Usb to an ESP with term sucha as MobaXterm, Minicomm etc...",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/hsaturn/TinyConsole.git"
+    },
+    "dependencies":
+    {  },
+    "version": "0.4.3",
+    "exclude": "",
+    "examples": "examples/*/*.ino",
+    "frameworks": "arduino",
+    "platforms": [
+        "atmelavr",
+        "espressif8266",
+        "espressif32"
+    ]
+}
