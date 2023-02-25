@@ -2,6 +2,7 @@
 #pragma once
 #include "TinyString.h"
 #include <string>
+#include <deque>
 #include <Stream.h>
 #define TINY_CONSOLE_AUTOSIZE 0
 
@@ -117,6 +118,10 @@ class TinyConsole
     CallBackFnKey callback_fn = nullptr;
     Stream* serial = nullptr;
     bool term = false;
+    bool csi6n = false;
+    uint8_t histo_n = 0;
+    uint8_t histo_max = 20;
+    std::deque<string> history;
 
     bool getTermSize();
 #if TINY_CONSOLE_AUTOSIZE

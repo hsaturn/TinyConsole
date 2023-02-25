@@ -5,6 +5,8 @@
 TinyConsole Console;
 #endif
 
+#define TINY_CONSOLE_DEBUG 0
+
 static const char* CSI="\033[";
 static const char ESC='\033';
 static const char BEL='\007';
@@ -29,6 +31,7 @@ void TinyConsole::begin(Stream& ser)
 
 bool TinyConsole::getTermSize()
 {
+  csi6n = true;
   *serial << CSI << "6n";
   delay(50);
   loop();
@@ -129,7 +132,7 @@ const TinyConsole& TinyConsole::fg(enum TinyConsole::Color c) const
 const TinyConsole& TinyConsole::prompt() const
 {
   if (term)
-    *serial << CSI << 'G' << ps1 << input << ' ' << CSI << (int)(ps1.size()+cursor+1) << 'G';
+    *serial << CSI << 'G' << ps1 << input << CSI << "0K" << CSI << (int)(ps1.size()+cursor+1) << 'G';
   return *this;
 }
 
@@ -160,6 +163,24 @@ void TinyConsole::loop()
     }
     else if (c==10 or c==13)
     {
+      if (histo_n)
+      {
+        if (history.size()>1)
+        {
+          auto it=history.begin()+histo_n-1;
+          string s=*it;
+          history.erase(it);
+          history.push_front(s);
+        }
+        histo_n = 0;
+      }
+      else if (input.size())
+      {
+        history.push_front(input);
+      }
+      if (history.size()>histo_max)
+        history.pop_back();
+
       if (callback) callback(input);
       input.clear();
       cursor=0;
@@ -169,13 +190,16 @@ void TinyConsole::loop()
     {
       input.insert(cursor++, 1, c);
     }
-    /*
+
+#if TINY_CONSOLE_DEBUG
+    static int counter=0;
     saveCursor();
-    gotoxy(4,1);
+    gotoxy(10,1);
     (*this).bg(white).fg(black);
-    (*this) << "code(" << (int)c << ')';
+    (*this) << "code(" << (int)c << ',' << counter++ << ')';
     restoreCursor();
-    */
+#endif
+
 		prompt();
   }
 }
@@ -198,8 +222,9 @@ void TinyConsole::handleEscape()
   char e=waitChar();
   if (d==91) // [
   {
-    if (e>='0' and e<='9')  // Size report
+    if (csi6n and (e>='0' and e<='9'))  // Size report
     {
+      csi6n = false;
       term = true;
 #if TINY_CONSOLE_AUTOSIZE
       sx=0;
@@ -223,9 +248,50 @@ void TinyConsole::handleEscape()
       while(waitChar());
 #endif
     }
-    // e=65 -> cursor up
-    // e=66 -> cursor down
-    if (e==67 and cursor < input.size())  // cursor right
+    if (e==51) // supr (but handled by 126)
+    {
+    }
+    else if (e==65 or e==66) // cursor up / down
+    {
+      string start = input.substr(0, cursor);
+      if (e==65) // up
+      {
+        while(histo_n < history.size())
+        {
+          auto it = history.begin() + histo_n;
+          histo_n++;
+
+          if (it->substr(0,cursor)==start)
+          {
+            input = *it;
+            break;
+          }
+        }
+      }
+      else if (e==66 and histo_n) // down
+      {
+        histo_n--;
+        if (histo_n)
+        {
+          while (histo_n)
+          {
+            auto it = history.begin() + histo_n - 1;
+            if (it->substr(0,cursor)==start)
+            {
+              input = *it;
+              break;
+            }
+            else
+              histo_n--;
+          }
+        }
+        if (histo_n == 0)
+        {
+          input.erase(cursor);
+        }
+      }
+    }
+    else if (e==67 and cursor < input.size())  // cursor right
     {
       cursor++;
     }
@@ -252,9 +318,29 @@ void TinyConsole::handleEscape()
         if (f>='0' and f<='4') callback_fn(f-'0'+9);
       }
     }
+
+#if TINY_CONSOLE_DEBUG
+    static int counter=0;
+    saveCursor();
+    gotoxy(11,1);
+    (*this).bg(white).fg(black);
+    (*this) << "code esc(d=" << (int)d << ", e=" << (int)e
+      << ", '" << (char)e << "')" << ',' << counter++ << " h=" << histo_n << ' '
+      << " cur=" << (int) cursor
+      << " hsz=" << history.size();
+
+    restoreCursor();
+#endif
+
   }
   else if (d=='O' and e>='P' and e<='S' and callback_fn)
   {
     callback_fn(e-'P'+1);
+  }
+  else if (histo_n) // reset
+  {
+    histo_n = false;
+    if (input.size()>cursor)
+      input.erase(cursor);
   }
 }
