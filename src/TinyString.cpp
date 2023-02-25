@@ -33,9 +33,9 @@ TinyString& TinyString::operator=(TinyString && other)
 {
   if (this == &other) return *this;
   clear();
-  str = std::exchange(other.str, str);
-  size_ = std::exchange(other.size_, size_);
-  free_ = std::exchange(other.free_, free_);
+  std::swap(other.str, str);
+  std::swap(other.size_, size_);
+  std::swap(other.free_, free_);
   return *this;
 }
 
