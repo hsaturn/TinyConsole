@@ -1,3 +1,6 @@
+# NOTE : Unit tests fails, but this lib is ok
+The failed test does not impact the library. The TinyString class is not yet used (the one that fails).
+
 # TinyConsole
 This library allows to communicate with an Arduino or an ESP through terminal  applications such as Minicomm or Mobaxterm.
 It supports a subset of ansi escape sequence and is able to distinguish between the Serial Monitor of Arduino IDE and a ansi terminal.
