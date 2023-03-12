@@ -1,8 +1,58 @@
 #include <TinyConsole.h>    // https://github.com/hsaturn/TinyConsole
 #include <TinyStreaming.h>  // https://github.com/hsaturn/TinyMqtt
+#include <math.h>
 
-void onCommand(const std::string &cmd)
+float max(float a, float b)
 {
+  return a>b ? a : b;
+}
+
+std::string getWord(std::string& str, char sep = ' ')
+{
+	std::string word;
+	auto spc = str.find(sep);
+	if (spc == std::string::npos)
+	{
+		word = str;
+		str = "";
+	}
+	else
+	{
+		word = str.substr(0, spc);
+		str = str.substr(spc+1);
+	}
+	return word;
+}
+
+void spiral(int max_ray, int x, int y, int dr)
+{
+  Console.cls();
+  float angle=0;
+  float d_angle = 0.05;
+  float ray=1;
+  while(ray<max_ray)
+  {
+    Console.gotoxy(max(x+cos(angle)*ray,0.0), max(y+sin(angle)*ray*1.5, 0.0));
+    Console << '*';
+    angle+=d_angle;
+    ray +=dr/200.0;
+  }
+}
+
+void onCommand(const std::string &cmd_in)
+{
+  static std::string last;
+  std::string args = cmd_in;
+  if (args=="!")
+  {
+    args = last;
+  }
+  else if (cmd_in.length())
+  {
+    last = cmd_in;
+  }
+  std::string cmd=getWord(args);
+
   if (cmd=="cls")
   {
     Console.cls();
@@ -51,8 +101,30 @@ void onCommand(const std::string &cmd)
     Console << "  color  : change prompt color (get list of colors with 'colors')" << endl;
     Console << "  help   : this help" << endl;
     Console << "  reset  : reset the ESP" << endl;
+    Console << "  spiral [ray] [x] [y] [dr]: draw a spiral (replace ray/x/y/dr by - to use previous value)" << endl;
+    Console << "  !      : repeat the last command" << endl;
     Console << endl;
     Console << "  try to press FN key, this should display the key in blue at top of the screen" << endl;
+  }
+  static int s_r = 40;
+  static int s_x = 20;
+  static int s_y = 40;
+  static int s_dr = 10;
+  if (cmd=="spiral")
+  {
+    int ray=atoi(getWord(args).c_str());
+    int x=atoi(getWord(args).c_str());
+    int y=atoi(getWord(args).c_str());
+    int dr=atoi(getWord(args).c_str());
+    if (ray==0) ray=s_r;
+    if (x==0) x=s_x;
+    if (y==0) y=s_y;
+    if (dr==0) dr=s_dr;
+    s_r = ray;
+    s_x = x;
+    s_y = y;
+    s_dr = dr;
+    spiral(ray,x,y,dr);
   }
   Console << endl;
 }
@@ -100,3 +172,5 @@ void loop()
   }
   Console.loop();
 }
+
+
