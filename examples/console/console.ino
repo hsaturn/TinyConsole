@@ -3,7 +3,11 @@
 
 void onCommand(const std::string &cmd)
 {
-  if (cmd=="cls") Console.cls();
+  if (cmd=="cls")
+  {
+    Console.cls();
+    Console.gotoxy(4,1);
+  }
   if (cmd=="reset")
   {
     Console.reset();
@@ -19,8 +23,8 @@ void onCommand(const std::string &cmd)
   }
 
   Console.saveCursor().gotoxy(2,1).fg(TinyConsole::red).bg(TinyConsole::white);
-  Console << "Last command: (" << cmd << ')' << endl;
-  Console.eraseEol().restoreCursor();
+  Console << "Last command: (" << cmd << ')';
+  Console.eraseEol().restoreCursor().bg(TinyConsole::black);
   if (cmd=="green") Console.fg(TinyConsole::green);
   if (cmd=="red") Console.fg(TinyConsole::red);
   if (cmd=="cyan") Console.fg(TinyConsole::cyan);
@@ -39,6 +43,18 @@ void onCommand(const std::string &cmd)
       << TinyConsole::blue << "blue "
       << TinyConsole::white << "white ";
   }
+  if (cmd=="help")
+  {
+    Console << endl << endl;
+    Console << "  cls    : clear screen" << endl;
+    Console << "  colors : get list of available colors" << endl;
+    Console << "  color  : change prompt color (get list of colors with 'colors')" << endl;
+    Console << "  help   : this help" << endl;
+    Console << "  reset  : reset the ESP" << endl;
+    Console << endl;
+    Console << "  try to press FN key, this should display the key in blue at top of the screen" << endl;
+  }
+  Console << endl;
 }
 
 void onFnKey(int fn)
@@ -56,6 +72,16 @@ void setup()
   Console.title("TinyConsole");
   Console.setCallback(onCommand);
   Console.setCallbackFnKey(onFnKey);
+  Console << endl << endl << endl << endl << endl;
+  Console << "Welcome to TinyConsole minidemo" << endl;
+  Console << "Enter 'help' to see available commands" << endl << endl;
+  if (not Console.isTerm())
+  {
+    Console << endl;
+    Console << "*** Warning ***: You are not using a real terminal. (no colors, no cursor etc..)";
+    Console << endl << endl;
+  }
+  Console.prompt();
 }
 
 void loop()
@@ -64,9 +90,13 @@ void loop()
   static int counter=0;
   if (increment++>10000)
   {
-    increment=0;
-    // Console.printAt(1,1, counter++);
+    if (Console.isTerm())
+    {
+      increment=0;
+      Console.saveCursor().gotoxy(4,1);
+      Console << TinyConsole::cyan << "10k counter: " << counter++ << ' ';
+      Console.restoreCursor();
+    }
   }
   Console.loop();
 }
-
