@@ -149,7 +149,7 @@ void TinyConsole::loop()
     char c=serial->read();
     if (c==27)
       handleEscape();
-    else if (c==8)
+    else if (c==8 or c==127)
     {
       if (input.size() and cursor>0)
       {
