@@ -220,14 +220,14 @@ void TinyTerm::handleEscape()
     gotoxy(11,1);
     (*this).bg(white).fg(black);
     (*this) << "code esc(d=" << (int)d << ", e=" << (int)e
-      << ", '" << (char)e << "')" << ',' << counter++
+      << ", '" << (char)e << "')" << ',' << counter++;
     restoreCursor();
 #endif
 
   }
   else if (d=='O' and e>='P' and e<='S' and callback_key)
   {
-    callback_key(KeyCode(e-'P'+1));
+    callback_key(KeyCode(KEY_F1+e-'P'));
   }
   else // if (histo_n) TODO was histo reset
   {

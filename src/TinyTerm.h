@@ -3,8 +3,8 @@
 #include "TinyStreaming.h"
 #include <deque>
 #include <functional>
+#include <utility>
 #include <Stream.h>
-#define TINY_term_AUTOSIZE 0
 
 class TinyTerm : public Stream
 {
@@ -51,6 +51,11 @@ class TinyTerm : public Stream
 
     enum KeyCode
     {
+      KEY_CTRL_A = 1, KEY_CTRL_B, KEY_CTRL_C, KEY_CTRL_D, KEY_CTRL_E, KEY_CTRL_F,
+      KEY_CTRL_G, KEY_CTRL_H, KEY_CTRL_I, KEY_CTRL_J, KEY_CTRL_K, KEY_CTRL_L,
+      KEY_CTRL_M, KEY_CTRL_N, KEY_CTRL_O, KEY_CTRL_P, KEY_CTRL_Q, KEY_CTRL_R,
+      KEY_CTRL_S, KEY_CTRL_T, KEY_CTRL_U, KEY_CTRL_V, KEY_CTRL_W, KEY_CTRL_X,
+      KEY_CTRL_Y, KEY_CTRL_Z,
       KEY_SUPPR = 0x100, KEY_BACK,
       KEY_RETURN,
       KEY_HOME, KEY_END,
@@ -68,7 +73,7 @@ class TinyTerm : public Stream
       restore_cursor
     };
 
-    using CallBackKey = void(*)(int fkey);
+    using CallBackKey = std::function<void(KeyCode)>;
     using CallBackMouse = std::function<void(const MouseEvent&)>;
 
     TinyTerm();
@@ -76,7 +81,7 @@ class TinyTerm : public Stream
     void begin(Stream&);
     void loop();
 
-    void onKey(std::function<void(KeyCode)> cb) { callback_key = cb; }
+    CallBackKey onKey(CallBackKey cb) { return std::exchange(callback_key, cb); }
     CallBackMouse onMouse(CallBackMouse cb) { mouseTrack(true); return std::exchange(callback_mouse, cb); }
 
     const TinyTerm& gotoxy(unsigned char x, unsigned char y) const;
