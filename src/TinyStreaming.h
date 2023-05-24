@@ -122,6 +122,9 @@ struct _BASED
   {}
 };
 
+const char* hex(uint16_t i);
+
+
 #if ARDUINO >= 100
 
 struct _BYTE_CODE
