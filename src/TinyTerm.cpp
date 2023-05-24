@@ -20,9 +20,11 @@ void TinyTerm::begin(long baud)
 
 void TinyTerm::begin(Stream& ser)
 {
+  delay(100);
   is_term = false;
   serial = &ser;
   getTermSize();
+  if (is_term) getTermSize();
 }
 
 void TinyTerm::clear()
@@ -31,56 +33,19 @@ void TinyTerm::clear()
   gotoxy(0,0);
 }
 
-bool TinyTerm::getTermSize()
+void TinyTerm::getTermSize()
 {
+  csi.clear();
+  sx=0;
+  sy=0;
   csi6n = true;
+  gotoxy(255,255);
   *serial << CSI << "6n";
-  delay(50);
+  delay(100);
   loop();
-  if (not is_term) return false;
-
-#if TINY_CONSOLE_AUTOSIZE
-  auto end = millis()+900;  // Avoid WDT
-  unsigned char dx=64;
-  unsigned char dy=64;
-  unsigned char tx=128;
-  unsigned char ty=128;
-  *serial << endl << endl;
-  *serial << "millis=" << millis() << endl;
-  while ((dx or dy) and millis()<end)
-  {
-    delay(50);
-    sx=0;
-    sy=0;
-    *serial << "try " << tx << "x" << ty << endl;
-    saveCursor();
-    gotoxy(tx,ty);
-    // Detect if it is a terminal (or the IDE's serial monitor)
-    // also try to compute size of terminal
-    *serial << CSI << "6n";
-    delay(10);
-    loop();
-    if (serial->available()) loop();
-    if (sx==tx)
-      tx+=dx;
-    else
-      tx-=dx;
-    if (sy==ty)
-      ty+=dy;
-    else
-      ty-=dy;
-
-    dx >>=1;
-    dy >>=1;
-  }
-  *serial << endl << endl;
-  *serial << "got sx=" << sx << ", sy=" << sy << ", dxdy=" << dx << ' ' << dy << endl;
-  if (sx) sx--;
-  if (sy) sy--;
-  return true;
-#else
-  return false;
-#endif
+  if (is_term) return;
+  sx=0;
+  sy=0;
 }
 
 char TinyTerm::waitChar()
@@ -194,27 +159,23 @@ void TinyTerm::handleEscape()
     {
       csi6n = false;
       is_term = true;
-#if TINY_CONSOLE_AUTOSIZE
-      sx=0;
-      sy=255;
+      sy=0;
+      sx=255;
       while ((e>='0' and e<='9') or e==';' or e=='R')
       {
+        csi += e;
         if (e=='R') return;
         if (e==';')
         {
-          sy=0;
+          sx=0;
         }
-        else if (sy==255)
-          sx=10*sx+e-'0';
-        else
+        else if (sx==255)
           sy=10*sy+e-'0';
+        else
+          sx=10*sx+e-'0';
         e=waitChar();
       }
-      *serial << endl;
       return;
-#else
-      while(waitChar());
-#endif
     }
     else if (e == 77) // mouse
     {

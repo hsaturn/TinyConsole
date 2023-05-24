@@ -129,6 +129,7 @@ class TinyTerm
     }
 
     bool isTerm() const { return is_term; }
+    void getTermSize();
     void mouseTrack(bool on);
     void clear();
 
@@ -141,12 +142,10 @@ class TinyTerm
     bool is_term = false;
     bool csi6n = false;
 
-    bool getTermSize();
-#if TINY_term_AUTOSIZE
   public:
     unsigned char sx;
     unsigned char sy;
-#endif
+    std::string csi;
 };
 
 #if !defined(NO_GLOBAL_INSTANCES) && !defined(NO_GLOBAL_SERIAL)
