@@ -204,9 +204,10 @@ void TinyTerm::handleEscape()
 					char g=waitChar();
 					if (g=='~')
 					{
+            if (f=='4') callback_key(KEY_F12);
 						if (f=='5') callback_key(KEY_F5);
-						if (f>='7' and f<='9') callback_key(KeyCode(KEY_F1-1+f-'7'+6));
-						if (f>='0' and f<='4') callback_key(KeyCode(KEY_F1-1+f-'0'+9));
+						if (f>='7' and f<='9') callback_key(KeyCode(KEY_F6+f-'7'));
+						if (f>='0' and f<='1') callback_key(KeyCode(KEY_F9+f-'0'));
 					}
 					break;
 				}
