@@ -31,6 +31,24 @@ class TinyTerm
       none = 255
     };
 
+    struct MouseEvent
+    {
+      union
+      {
+        struct {
+          uint8_t button: 2;  // 0:left 1:mid 2:right 3:none
+          uint8_t shift: 1;
+          uint8_t unused_1: 1;
+          uint8_t ctrl: 1;
+          uint8_t unuse_2: 1;
+          uint8_t wheel: 1;
+        } event;
+        uint8_t value;
+      };
+      unsigned x;
+      unsigned y;
+    };
+
     enum KeyCode
     {
       KEY_SUPPR = 0x100, KEY_BACK,
@@ -51,6 +69,7 @@ class TinyTerm
     };
 
     using CallBackKey = void(*)(int fkey);
+    using CallBackMouse = std::function<void(const MouseEvent&)>;
 
     TinyTerm();
     void begin(long baud);  // Init with Serial
@@ -58,6 +77,7 @@ class TinyTerm
     void loop();
 
     void onKey(std::function<void(KeyCode)> cb) { callback_key = cb; }
+    CallBackMouse onMouse(CallBackMouse cb) { mouseTrack(true); return std::exchange(callback_mouse, cb); }
 
     const TinyTerm& gotoxy(unsigned char x, unsigned char y) const;
     const TinyTerm& cursorVisible(bool visible) const;
@@ -109,12 +129,14 @@ class TinyTerm
     }
 
     bool isTerm() const { return is_term; }
+    void mouseTrack(bool on);
     void clear();
 
   private:
     char waitChar();
     void handleEscape();
     std::function<void(KeyCode)> callback_key;
+    std::function<void(MouseEvent)> callback_mouse;
     Stream* serial = nullptr;
     bool is_term = false;
     bool csi6n = false;

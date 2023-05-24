@@ -94,6 +94,12 @@ char TinyTerm::waitChar()
   return 0;
 }
 
+void TinyTerm::mouseTrack(bool on)
+{
+  *serial << CSI << (on ? "?1000h" : "?1000l");
+}
+
+
 const TinyTerm& TinyTerm::eraseEol() const
 {
   if (is_term) *serial << CSI << 'K';
@@ -210,7 +216,16 @@ void TinyTerm::handleEscape()
       while(waitChar());
 #endif
     }
-    if (callback_key)
+    else if (e == 77) // mouse
+    {
+      static MouseEvent event;
+      char f=waitChar();
+      event.value = f;
+      event.x = waitChar() - '!';
+      event.y = waitChar() - '!';
+      if (callback_mouse) callback_mouse(event);
+    }
+    else if (callback_key)
 		{
 			switch(e)
 			{
