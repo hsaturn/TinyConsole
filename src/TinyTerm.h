@@ -6,7 +6,7 @@
 #include <Stream.h>
 #define TINY_term_AUTOSIZE 0
 
-class TinyTerm
+class TinyTerm : public Stream
 {
   public:
 
@@ -101,6 +101,11 @@ class TinyTerm
     const TinyTerm& eraseEol() const;
     const TinyTerm& fg(enum Color c) const;
     const TinyTerm& bg(enum Color c) const { return fg(static_cast<enum Color>(static_cast<int>(c)+10)); }
+
+    int available() override { return serial->available(); }
+    int read() override { return serial->read(); }
+    int peek() override { return serial->peek(); }
+    size_t write(uint8_t t) override { return serial->write(t); }
 
     template<class Type>
     friend TinyTerm& operator << (TinyTerm& term, Type value)
