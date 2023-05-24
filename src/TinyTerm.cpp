@@ -25,6 +25,12 @@ void TinyTerm::begin(Stream& ser)
   getTermSize();
 }
 
+void TinyTerm::clear()
+{
+  if (is_term) *serial << CSI << "2J";
+  gotoxy(0,0);
+}
+
 bool TinyTerm::getTermSize()
 {
   csi6n = true;

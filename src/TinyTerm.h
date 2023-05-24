@@ -109,6 +109,7 @@ class TinyTerm
     }
 
     bool isTerm() const { return is_term; }
+    void clear();
 
   private:
     char waitChar();
