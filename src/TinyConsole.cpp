@@ -109,17 +109,10 @@ void TinyConsole::onKey(TinyTerm::KeyCode key)
 			}
       break;
 		}
-		case TinyTerm::KEY_RIGHT:
-    	if (cursor < input.size()) cursor++;
-    	break;
-    case TinyTerm::KEY_LEFT:
-    	if (cursor > 0) cursor--;
-    case TinyTerm::KEY_HOME:
-      cursor=0;
-    	break;
-    case TinyTerm::KEY_END:
-      cursor=input.size();
-      break;
+    case TinyTerm::KEY_RIGHT: if (cursor < input.size()) cursor++; break;
+    case TinyTerm::KEY_LEFT: if (cursor > 0) cursor--; break;
+    case TinyTerm::KEY_HOME: cursor=0; break;
+    case TinyTerm::KEY_END: cursor=input.size(); break;
 		default:
 		{
     	if (key>=32 and key<=255)
