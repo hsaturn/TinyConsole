@@ -146,8 +146,8 @@ class TinyTerm : public Stream
   private:
     char waitChar();
     void handleEscape();
-    std::function<void(KeyCode)> callback_key;
-    std::function<void(MouseEvent)> callback_mouse;
+    CallBackKey callback_key;
+    CallBackMouse callback_mouse;
     Stream* serial = nullptr;
     bool is_term = false;
     bool csi6n = false;

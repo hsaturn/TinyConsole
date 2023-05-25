@@ -12,7 +12,7 @@ class TinyApp
 		AppState state() const { return state_; }
 		void terminate();
 		virtual void onKey(TinyTerm::KeyCode) = 0;
-		virtual void onMouse(const TinyTerm::MouseEvent&) {};
+		virtual void onMouse(const TinyTerm::MouseEvent&) {}
 		virtual void loop() {}
 
 	protected:
