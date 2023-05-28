@@ -51,7 +51,6 @@ void TinyConsole::onKey(TinyTerm::KeyCode key)
       if (callback) callback(input);
       input.clear();
       cursor=0;
-      prompt();
       break;
     }
 		case TinyTerm::KEY_BACK:
