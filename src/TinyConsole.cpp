@@ -1,7 +1,8 @@
 #include "TinyConsole.h"
 
-TinyTerm Term;
+#if !defined(NO_GLOBAL_INSTANCES) && !defined(NO_GLOBAL_SERIAL)
 TinyConsole Console(&Term);
+#endif
 
 TinyConsole::TinyConsole(TinyTerm* term)
 	: ps1("> "), term(term)

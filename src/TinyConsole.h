@@ -8,7 +8,7 @@ class TinyConsole
 {
 	public:
     using string = std::string;
-    using CallBack = void(*)(const string& command);
+    using CallBack = std::function<void(const string& command)>;
 
     TinyConsole(TinyTerm* term);
 
@@ -29,11 +29,6 @@ class TinyConsole
 			return *con.term;
 		};
 
-		// For compatibility, please do not use for new projects
-
-    void begin(long baud) { term->begin(baud); }
-    void begin(Stream& stream) { term->begin(stream); }
-
 	private:
     string::size_type cursor=0; // column
     string input;
@@ -45,6 +40,6 @@ class TinyConsole
     TinyTerm* term;
 };
 
-#if !defined(NO_GLOBAL_INSTANCES) && !defined(NO_GLOBAL_SERIAL)
+#if !defined(NO_GLOBAL_INSTANCES) && !defined(NO_GLOBAL_SERIAL) && !defined(NO_GLOBAL_CONSOLE)
 extern TinyConsole Console;
 #endif

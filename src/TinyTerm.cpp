@@ -3,33 +3,32 @@
 
 #define TINY_CONSOLE_DEBUG 0
 
+#if !defined(NO_GLOBAL_INSTANCES) && !defined(NO_GLOBAL_SERIAL)
+TinyTerm Term(Serial);
+#endif
+
 static const char* CSI="\033[";
 static const char ESC='\033';
 static const char BEL='\007';
 
-TinyTerm::TinyTerm()
-  : serial(&Serial)
+TinyTerm::TinyTerm(Stream& ref_stream)
+  : stream(&ref_stream)
 {
-}
-
-void TinyTerm::begin(long baud)
-{
-	serial = &Serial;
-	Serial.begin(baud);
 }
 
 void TinyTerm::begin(Stream& ser)
 {
+  stream = &ser;
   delay(100);
   is_term = false;
-  serial = &ser;
+  stream = &ser;
   getTermSize();
   if (is_term) getTermSize();
 }
 
 void TinyTerm::clear()
 {
-  if (is_term) *serial << CSI << "2J";
+  if (is_term) *stream << CSI << "2J";
   gotoxy(0,0);
 }
 
@@ -40,7 +39,7 @@ void TinyTerm::getTermSize()
   sy=0;
   csi6n = true;
   gotoxy(255,255);
-  *serial << CSI << "6n";
+  *stream << CSI << "6n";
   delay(100);
   loop();
   if (is_term) return;
@@ -52,8 +51,8 @@ char TinyTerm::waitChar()
 {
   for(int i=0; i<30; i++)
   {
-    if (serial->available())
-      return serial->read();
+    if (stream->available())
+      return stream->read();
     delay(1);
   }
   return 0;
@@ -61,57 +60,57 @@ char TinyTerm::waitChar()
 
 void TinyTerm::mouseTrack(bool on)
 {
-  *serial << CSI << (on ? "?1000h" : "?1000l");
+  *stream << CSI << (on ? "?1000h" : "?1000l");
 }
 
 
 const TinyTerm& TinyTerm::eraseEol() const
 {
-  if (is_term) *serial << CSI << 'K';
+  if (is_term) *stream << CSI << 'K';
   return *this;
 }
 
 const TinyTerm& TinyTerm::saveCursor() const
 {
-  if (is_term) *serial << CSI << 's';
+  if (is_term) *stream << CSI << 's';
   return *this;
 }
 
 const TinyTerm& TinyTerm::cursorVisible(bool visible) const
 {
-  if (is_term) *serial << CSI << "?25" << (visible ? 'h' : 'l');
+  if (is_term) *stream << CSI << "?25" << (visible ? 'h' : 'l');
   return *this;
 }
 
 const TinyTerm& TinyTerm::restoreCursor() const
 {
-  if (is_term) *serial << CSI << 'u';
+  if (is_term) *stream << CSI << 'u';
   return *this;
 }
 
 const TinyTerm& TinyTerm::gotoxy(unsigned char row, unsigned char col) const
 {
-  if (is_term) *serial << CSI << (int) row << ';' << (int) col << 'H';
+  if (is_term) *stream << CSI << (int) row << ';' << (int) col << 'H';
   return *this;
 }
 
 const TinyTerm& TinyTerm::fg(enum TinyTerm::Color c) const
 {
-  if (is_term) *serial << CSI << static_cast<int>(c) << 'm';
+  if (is_term) *stream << CSI << static_cast<int>(c) << 'm';
   return *this;
 }
 
 const TinyTerm& TinyTerm::reset() const
 {
-  if (is_term) *serial << "\033c";
+  if (is_term) *stream << "\033c";
   return *this;
 }
 
 void TinyTerm::loop()
 {
-  if (serial->available())
+  if (stream->available())
   {
-    char c=serial->read();
+    char c=stream->read();
 		if (c==27)
       handleEscape();
 		else if (callback_key)
@@ -139,13 +138,13 @@ void TinyTerm::loop()
 
 const TinyTerm& TinyTerm::cls() const
 {
-  if (is_term) *serial << CSI << "2J";
+  if (is_term) *stream << CSI << "2J";
   return *this;
 }
 
 const TinyTerm& TinyTerm::title(const char* title) const
 {
-  if (is_term) *serial << '\033' << "]2;" << title << BEL;
+  if (is_term) *stream << '\033' << "]2;" << title << BEL;
   return *this;
 }
 

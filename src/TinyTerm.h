@@ -87,13 +87,12 @@ class TinyTerm : public Stream
     using CallBackKey = std::function<void(KeyCode)>;
     using CallBackMouse = std::function<void(const MouseEvent&)>;
 
-    TinyTerm();
-    void begin(long baud);  // Init with Serial
-    void begin(Stream&);
+    TinyTerm(Stream& pstream);
+    void begin(Stream& pstream);  // FIXME ambiguous with ctor
     void loop();
 
-    CallBackKey onKey(CallBackKey cb) { return std::exchange(callback_key, cb); }
-    CallBackMouse onMouse(CallBackMouse cb) { mouseTrack(true); return std::exchange(callback_mouse, cb); }
+    CallBackKey onKey(CallBackKey cb) { return exchange(callback_key, cb); }
+    CallBackMouse onMouse(CallBackMouse cb) { mouseTrack(true); return exchange(callback_mouse, cb); }
 
     const TinyTerm& gotoxy(unsigned char x, unsigned char y) const;
     const TinyTerm& cursorVisible(bool visible) const;
@@ -104,7 +103,7 @@ class TinyTerm : public Stream
       saveCursor();
       cursorVisible(false);
       gotoxy(row, col);
-      *serial << what;
+      *stream << what;
       restoreCursor();
       cursorVisible(true);
     }
@@ -118,15 +117,15 @@ class TinyTerm : public Stream
     const TinyTerm& fg(enum Color c) const;
     const TinyTerm& bg(enum Color c) const { return fg(static_cast<enum Color>(static_cast<int>(c)+10)); }
 
-    int available() override { return serial->available(); }
-    int read() override { return serial->read(); }
-    int peek() override { return serial->peek(); }
-    size_t write(uint8_t t) override { return serial->write(t); }
+    int available() override { return stream->available(); }
+    int read() override { return stream->read(); }
+    int peek() override { return stream->peek(); }
+    size_t write(uint8_t t) override { return stream->write(t); }
 
     template<class Type>
     friend TinyTerm& operator << (TinyTerm& term, Type value)
     {
-      *term.serial << value;
+      *term.stream << value;
       return term;
     }
 
@@ -159,7 +158,7 @@ class TinyTerm : public Stream
     void handleEscape();
     CallBackKey callback_key;
     CallBackMouse callback_mouse;
-    Stream* serial = nullptr;
+    Stream* stream = nullptr;
     bool is_term = false;
     bool csi6n = false;
 
