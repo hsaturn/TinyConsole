@@ -210,6 +210,10 @@ void TinyTerm::handleEscape()
 					}
 					break;
 				}
+        case 5: callback_key(KeyCode(KEY_PGUP)); break;
+        case 6: callback_key(KeyCode(KEY_PGDOWN)); break;
+        default:
+          Term << __LINE__ << " unhandled " << e << endl;
 			}
 		}
 
