@@ -27,10 +27,18 @@ void TinyConsole::prompt() const
 
 void TinyConsole::onKey(TinyTerm::KeyCode key)
 {
-	switch(key)
-	{
-		case TinyTerm::KEY_RETURN:
-		{
+  switch(key)
+  {
+    case TinyTerm::KEY_ESC:
+    {
+      if (histo_n)
+        histo_n = false;
+      if (input.size()>cursor)
+        input.erase(cursor);
+      break;
+    }
+    case TinyTerm::KEY_RETURN:
+    {
       if (histo_n)
       {
         if (history.size()>1)

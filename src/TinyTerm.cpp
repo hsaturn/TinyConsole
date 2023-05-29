@@ -226,17 +226,11 @@ void TinyTerm::handleEscape()
   }
   else if (d=='O' and e>='P' and e<='S' and callback_key)
   {
+    Term << __LINE__ << " e=" << e << endl;
     callback_key(KeyCode(KEY_F1+e-'P'));
   }
-  else // if (histo_n) TODO was histo reset
+  else if (d==0 and callback_key)
   {
-    saveCursor();
-    (*this) << "histo reset if histo_n";
-    restoreCursor();
-  	/*
-    histo_n = false;
-    if (input.size()>cursor)
-      input.erase(cursor);
-      */
+    callback_key(KeyCode(KEY_ESC));
   }
 }
