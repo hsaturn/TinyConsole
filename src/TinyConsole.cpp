@@ -17,7 +17,7 @@ TinyConsole::TinyConsole(TinyTerm* term)
 static const char* CSI="\033[";
 void TinyConsole::prompt() const
 {
-	if (term and term->isTerm())
+	if (ps1.length() and term and term->isTerm())
 	{
 		// TODO should not use CSI sequences but term methods
     *term << CSI << 'G' << ps1 << input << CSI << "0K" << CSI << (int)(ps1.size()+cursor+1) << 'G';

@@ -17,8 +17,9 @@ class TinyConsole
 
     void prompt() const;
 		
+    // nullptr prompt disable display
     void setPrompt(const char* prompt)
-    { ps1 = prompt; }
+    { if (prompt) ps1 = prompt; else ps1.clear(); }
 
     void onKey(TinyTerm::KeyCode key);
 
