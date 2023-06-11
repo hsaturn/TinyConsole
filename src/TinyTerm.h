@@ -127,6 +127,9 @@ class TinyTerm : public Stream
     friend TinyTerm& operator << (TinyTerm& term, Type value)
     { *term.stream << value; return term; }
 
+    friend TinyTerm& operator << (TinyTerm& term, const char* ptr)
+    { *term.stream << ptr; return term; }
+
     template<class Type>
     friend TinyTerm& operator << (TinyTerm& term, Type* ptr)
     { *term.stream << (long)ptr; return term; }
