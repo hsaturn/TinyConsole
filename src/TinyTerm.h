@@ -130,6 +130,8 @@ class TinyTerm : public Stream
       return term;
     }
 
+    friend TinyTerm& operator << (TinyTerm& term, void* ptr) { *term.stream << (long)ptr; return term; }
+
     friend TinyTerm& operator << (TinyTerm& term, Color color)
     {
       term.fg(color);
