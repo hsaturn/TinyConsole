@@ -125,12 +125,11 @@ class TinyTerm : public Stream
 
     template<class Type>
     friend TinyTerm& operator << (TinyTerm& term, Type value)
-    {
-      *term.stream << value;
-      return term;
-    }
+    { *term.stream << value; return term; }
 
-    friend TinyTerm& operator << (TinyTerm& term, void* ptr) { *term.stream << (long)ptr; return term; }
+    template<class Type>
+    friend TinyTerm& operator << (TinyTerm& term, Type* ptr)
+    { *term.stream << (long)ptr; return term; }
 
     friend TinyTerm& operator << (TinyTerm& term, Color color)
     {
