@@ -164,8 +164,8 @@ class TinyTerm : public Stream
     bool csi6n = false;
 
   public:
-    unsigned char sx;
-    unsigned char sy;
+    unsigned char sx; // cols
+    unsigned char sy; // rows
     std::string csi;
 };
 
