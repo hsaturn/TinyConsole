@@ -2,6 +2,7 @@
 #include <Arduino.h>
 #include <assert.h>
 #include <cstdint>
+#include <limits>
 
 #pragma pack(push, 1)
 
