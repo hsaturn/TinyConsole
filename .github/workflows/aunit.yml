@@ -23,6 +23,6 @@ jobs:
         git clone https://github.com/bxparks/AceCommon
     - name: Verify tests
       run: |
-        make -C tests tests
-        make -C tests runtests
-        make -C tests clean
+        make -C extras/tests tests
+        make -C extras/tests runtests
+        make -C extras/tests clean
