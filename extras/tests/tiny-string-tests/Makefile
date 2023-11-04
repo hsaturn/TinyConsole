@@ -7,4 +7,4 @@ APP_NAME := tiny-string-tests
 ARDUINO_LIBS := AUnit AceCommon AceTime TinyConsole
 ARDUINO_LIB_DIRS := ../../../EspMock/libraries
 EPOXY_CORE := EPOXY_CORE_ESP8266
-include ../../../EpoxyDuino/EpoxyDuino.mk
+include ../EpoxyDuino.mk
